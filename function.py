@@ -1,4 +1,4 @@
-wordleWord = [['a', 'u', 'd', 'i', 'o'], [2, 0, 2, 0, 1]]
+wordleWord = [['d', 'o', 'c', 'i', 'l'], [2, 2, 0, 2, 0]]
 
 LETTER_NOT_EXIST = 0
 LETTER_EXIST_IN_OTHER_POSITION = 1
@@ -46,7 +46,7 @@ def evaluateRepeatedLetters(wordsInFile, file, position, analizedLetter, letters
     # la variable file passa por aquí simplemente para ser un parametro en otra funcion. suena a global
     # el nombre de variable skip tampoco resulta del todo claro, dado que skip pasa a ser true precisamente cuando ejecuta una acción
     i = 0
-    skip = False
+    evaluated = False
 
     times = letters.count(analizedLetter)
     if times != 1:
@@ -57,10 +57,10 @@ def evaluateRepeatedLetters(wordsInFile, file, position, analizedLetter, letters
                 # si el valor es 0 y el superior es 2, elimina todas las palabras con esa letra en todas las posiciones menos en la de valor 2
                 # si el valor es 1 y el superior 2, elimina las palabras que no contengan como minimo 2 veces ese valor
                 delete_words_with_letter_in_position(wordsInFile , file, letter, position)
-                skip = True
+                evaluated = True
             i += 1
 
-    return skip
+    return evaluated
 
 def getFilename():
     from datetime import datetime
@@ -69,7 +69,7 @@ def getFilename():
     filename = date + '.txt'
 
     if not exists(filename):
-        generateFile(filename)
+        createFile(filename)
     return filename
 
 def getWordsInFile(file):
@@ -85,7 +85,7 @@ def printNumberOfWords(file):
     numberOfWords = len(words)
     print(numberOfWords)
 
-def generateFile(file):
+def createFile(file):
     with open('five_char_words.txt', 'r') as fullWordsList:
         words = ''
         for word in fullWordsList:
