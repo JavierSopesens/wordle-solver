@@ -19,3 +19,4 @@ NEXT STEPS
     - sumar los valores de cada letra de la palabra (la palabra pasa a tener un valor numérico)
     - mostrar las recomendaciones en funcion de su valor
     - priorizar mostrar palabras sin letras repetidas
+    test
