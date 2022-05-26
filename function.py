@@ -1,53 +1,51 @@
-word = [['a', 'u', 'd', 'i', 'o'], [1, 0, 0, 0, 0]]
+word = [['a', 'b', 'a', 'b', 'a'], [2, 0, 2, 0, 0]]
 
 LETTER_NOT_EXIST = 0
 LETTER_EXIST_IN_OTHER_POSITION = 1
 LETTER_IN_PLACE = 2
 
 def reduce_list(word):
+    letters = word[0]
+    values = word[1]
     file = getFilename()
     count = 0
+
     printNumberOfWords(file)
-    #word[0] definitivamente tiene que ser un nombre propio
-    for letter in word[0]:
+    for letter in letters:
         lines = getWordsInFile(file)
-        skip = evaluate_repetition(lines, file, count, letter)
-        if skip:
-            #las dos siguientes lineas de codigo se encuentran tambien al finalizar esta funcion
-            printNumberOfWords(file)
-            count+=1
-            continue
-        if word[1][count] == LETTER_NOT_EXIST:
-            delete_words_with_letter(lines, file, word[0][count])
-        if word[1][count] == LETTER_EXIST_IN_OTHER_POSITION:
-            delete_words_without_letter_and_with_letter_in_position(lines, file, word[0][count], count)
-        if word[1][count] == LETTER_IN_PLACE:
-            delete_words_without_letter_in_that_position(lines, file, word[0][count], count)
+        skip = evaluate_repetition(lines, file, count, letter, letters, values)
+        if not skip:
+            if values[count] == LETTER_NOT_EXIST:
+                delete_words_with_letter(lines, file, letters[count])
+            if values[count] == LETTER_EXIST_IN_OTHER_POSITION:
+                delete_words_without_letter_and_with_letter_in_position(lines, file, letters[count], count)
+            if values[count] == LETTER_IN_PLACE:
+                delete_words_without_letter_in_that_position(lines, file, letters[count], count)
         printNumberOfWords(file)
         count += 1
-    import os
-    os.remove(file)
+    # import os
+    # os.remove(file)
 
 
-def evaluate_repetition(lines, file, position, letter):
-    #ese global me suena super fishy
+def evaluate_repetition(lines, file, position, analizedLetter, letters, values):
     #la variable file passa por aquí simplemente para ser un parametro en otra funcion. suena a global
     #el nombre de variable skip tampoco resulta del todo claro, dado que skip pasa a ser true precisamente cuando ejecuta una acción
-    global word
-    where = []
     i = 0
     skip = False
 
-    for char in word[0]:
-        if char == letter:
-            where.append(i)
-        i += 1
-    times = word[0].count(letter)
+    times = letters.count(analizedLetter)
     if times != 1:
-        for value in where:
-            if word[1][position] < word[1][value]:
-                delete_words_with_letter_in_position(lines, file, letter, position)
-                skip = True
+        for letter in letters:
+            if letter == analizedLetter:
+                if values[position] < values[i]:
+                    # se puede afinar mas: 
+                    # si el valor inferior es 0 y el superior es 1, elimina todas las palabras con esa letra en esa posicion
+                    # si el valor es 0 y el superior es 2, elimina todas las palabras con esa letra en todas las posiciones menos en la de valor 2
+                    # si el valor es 1 y el superior 2, elimina las palabras que no contengan como minimo 2 veces ese valor
+                    delete_words_with_letter_in_position(lines, file, letter, position)
+                    skip = True
+            i += 1
+            
     return skip
 
 def getFilename():
@@ -74,10 +72,8 @@ def getFilename():
     return filename
 
 def getWordsInFile(file):
-    # posible sintaxis alternativa para readlines?
     with open(file, 'r') as file:
-        wordsInFile = file.readlines()
-    return wordsInFile
+        return file.readlines()
 
 def printNumberOfWords(file):
     words = getWordsInFile(file)
