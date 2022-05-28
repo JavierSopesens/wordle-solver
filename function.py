@@ -1,10 +1,10 @@
-wordleWord = [['d', 'o', 'c', 'i', 'l'], [2, 2, 0, 2, 0]]
+wordleWord = [['t', 'o', 'n', 't', 'o'], [1, 0, 0, 2, 0]]
 
 LETTER_NOT_EXIST = 0
 LETTER_EXIST_IN_OTHER_POSITION = 1
 LETTER_IN_PLACE = 2
 
-def reduceListOfWords(wordleWord):
+def deleteWords(wordleWord):
     file = createFile()
     count = 0
     letters = wordleWord[0]
@@ -16,13 +16,14 @@ def reduceListOfWords(wordleWord):
         WordsInFile = getWordsInFile(file)
         evaluated = evaluateRepeatedLetters(WordsInFile, file, count, letter, letters, values)
         if not evaluated:
-            deleteWords(letterStatus, WordsInFile, file, letter, count)
+            remainingWords = reduceListOfWords(letterStatus, WordsInFile, letter, count)
+            writeWordsInFile(file, remainingWords)
         printNumberOfWords(file)
         count += 1
-    # import os
-    # os.remove(file)
+    import os
+    os.remove(file)
 
-def deleteWords(status, WordsInFile, file, letter, position):
+def reduceListOfWords(status, WordsInFile, letter, position):
     remainingWords = ''
     for word in WordsInFile:
         if status == LETTER_NOT_EXIST:
@@ -30,9 +31,35 @@ def deleteWords(status, WordsInFile, file, letter, position):
         if status == LETTER_EXIST_IN_OTHER_POSITION:
             remainingWords += get_word_without_letter_and_with_letter_in_position(word, letter, position)
         if status == LETTER_IN_PLACE:
-            remainingWords += get_word_without_letter_in_that_position(
-                word, letter, position)
-    writeWordsInFile(file, remainingWords)
+            remainingWords += get_word_without_letter_in_that_position(word, letter, position)
+    return remainingWords
+
+def evaluateRepeatedLetters(wordsInFile, file, position, analizedLetter, letters, values):
+    # la variable file passa por aquí simplemente para ser un parametro en otra funcion. suena a global
+    i = 0
+    evaluated = False
+
+    timesRepeated = letters.count(analizedLetter)
+    if timesRepeated == 1:
+        return evaluated 
+
+    for letter in letters:
+        if letter == analizedLetter and values[position] < values[i]:
+            remainingWords = ''
+            for word in wordsInFile:
+                remainingWords += get_words_with_letter_in_position(word, letter, position)
+            # se puede afinar mas:
+            # si el valor inferior es 0 y el superior es 1, elimina todas las palabras con esa letra en esa posicion
+            # si el valor es 0 y el superior es 2, elimina todas las palabras con esa letra en todas las posiciones menos en la de valor 2
+            # si el valor es 1 y el superior 2, elimina las palabras que no contengan como minimo 2 veces ese valor
+            writeWordsInFile(file, remainingWords)
+            evaluated = True
+        i += 1
+
+    return evaluated
+
+def get_words_with_letter_in_position(word, letter, position):
+    return word if word[position] != letter else ''
 
 def get_word_with_letter(word, letter):
     return word if letter not in word else ''
@@ -42,26 +69,6 @@ def get_word_without_letter_and_with_letter_in_position(word, letter, position):
 
 def get_word_without_letter_in_that_position(word, letter, position):
     return word if word[position] == letter else ''
-
-def evaluateRepeatedLetters(wordsInFile, file, position, analizedLetter, letters, values):
-    # la variable file passa por aquí simplemente para ser un parametro en otra funcion. suena a global
-    # el nombre de variable skip tampoco resulta del todo claro, dado que skip pasa a ser true precisamente cuando ejecuta una acción
-    i = 0
-    evaluated = False
-
-    times = letters.count(analizedLetter)
-    if times != 1:
-        for letter in letters:
-            if letter == analizedLetter and values[position] < values[i]:
-                # se puede afinar mas:
-                # si el valor inferior es 0 y el superior es 1, elimina todas las palabras con esa letra en esa posicion
-                # si el valor es 0 y el superior es 2, elimina todas las palabras con esa letra en todas las posiciones menos en la de valor 2
-                # si el valor es 1 y el superior 2, elimina las palabras que no contengan como minimo 2 veces ese valor
-                delete_words_with_letter_in_position(wordsInFile, file, letter, position)
-                evaluated = True
-            i += 1
-
-    return evaluated
 
 def createFile():
     filename = generateFileName()
@@ -75,7 +82,6 @@ def generateFileName():
     from datetime import datetime
     date = datetime.today().strftime('%Y-%m-%d')
     return date + '.txt'
-
 
 def getWordsInFile(file):
     with open(file, 'r') as file:
@@ -97,11 +103,4 @@ def populateFile(file):
             words += word
         writeWordsInFile(file, words)
 
-def delete_words_with_letter_in_position(words, file, letter, position):
-    remainingWords = ''
-    for word in words:
-        if word[position] != letter:
-            remainingWords += word
-    writeWordsInFile(file, remainingWords)
-
-reduceListOfWords(wordleWord)
+deleteWords(wordleWord)
