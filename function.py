@@ -1,4 +1,4 @@
-wordleWord = [['t', 'o', 'n', 't', 'o'], [1, 0, 0, 2, 0]]
+wordleWord = [['a', 'u', 'd', 'i', 'o'], [0, 0, 0, 0, 2]]
 
 LETTER_NOT_EXIST = 0
 LETTER_EXIST_IN_OTHER_POSITION = 1
@@ -9,10 +9,10 @@ def deleteWords(wordleWord):
     count = 0
     letters = wordleWord[0]
     values = wordleWord[1]
-    letterStatus = wordleWord[1][count]
 
     printNumberOfWords(file)
     for letter in letters:
+        letterStatus = wordleWord[1][count]
         WordsInFile = getWordsInFile(file)
         evaluated = evaluateRepeatedLetters(WordsInFile, file, count, letter, letters, values)
         if not evaluated:
@@ -20,8 +20,8 @@ def deleteWords(wordleWord):
             writeWordsInFile(file, remainingWords)
         printNumberOfWords(file)
         count += 1
-    import os
-    os.remove(file)
+    # import os
+    # os.remove(file)
 
 def reduceListOfWords(status, WordsInFile, letter, position):
     remainingWords = ''
