@@ -1,28 +1,27 @@
-# coge las palabras
-f_lines = open('five_char_words.txt', 'r')
-lines = f_lines.readlines()
-f_lines.close()
+with open('five_char_words.txt', 'r') as file:
+    words = file.readlines()
+
 # por cada letra, la introduce en el diccionario letters y cada vez que aparezca, le suma 1
 letters = {}
-for line in lines:
-    line = line.rstrip()
-    for char in line:
+for word in words:
+    word = word.rstrip()
+    for char in word:
         if char not in letters:
             letters[char] = 1
         else:
             letters[char] +=1 
-
 # asignale una puntuación a una palabra dependiendo de las veces que aparezcan sus letras
-words = {}
-for line in lines:
-    line = line.rstrip()
-    for char in line:
-        words[line] = 0
-        words[line] += letters[char]
+dictionary = {} 
+for word in words:
+    word = word.rstrip()
+    value = 0
+    for char in word:
+        value += letters.get(char)
+    dictionary[word] = []
+    dictionary[word].append(value)
 
-#search the word with the higher value
-# PROBLEMA!! Devuelve valores con letras repetidas. 
-# Eliminar del diccionario aquellas que tengan letras repetidas!
-#best_word = max(words, key=words.get)
-#print(best_word)
+sortedDictionary = {}
+for w in sorted(dictionary, key=dictionary.get, reverse=True)[:10]:
+    print(w, dictionary[w])
+# poner como primer opcion aquellas palabras que no tengan dos letras
 
