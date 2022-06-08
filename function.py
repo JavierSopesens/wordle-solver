@@ -36,10 +36,6 @@ def reduceListOfWords(status, wordsInFile, letter, position):
             remainingWords += get_word_with_letter_in_that_position(word, letter, position)
     return remainingWords
 
-def evaluateRepeatedLetters(analizedLetter, letters):
-    timesRepeated = letters.count(analizedLetter)
-    return False if timesRepeated == 1 else True
-
 def analizeRepeated(letters, analizedLetter, values, position, wordsInFile, file):
     # la variable file passa por aquí simplemente para ser un parametro en otra funcion. suena a global
     # se puede afinar mas:
