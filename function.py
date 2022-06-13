@@ -1,94 +1,62 @@
-from Dictionary import Dictionary
-
-wordleWord = [['t', 'r', 'a', 'm', 'a'], [2, 2, 2, 0, 2]]
+from File import File
 
 LETTER_NOT_EXIST = 0
 LETTER_EXIST_IN_OTHER_POSITION = 1
 LETTER_IN_PLACE = 2
 
-def deleteWords(wordleWord):
-    file = createFile()
-    Dict = Dictionary(file)
-    count = 0
-    letters = wordleWord[0]
-    values = wordleWord[1]
-    print(Dict.getNumberOfWords())
-    for letter in letters:
-        letterStatus = wordleWord[1][count]
-        wordsInFile = Dict.getContent()
-        repeated = analizeRepeated(letters, letter, values, count, wordsInFile, file)
-        if not repeated:
-            remainingWords = reduceListOfWords(letterStatus, wordsInFile, letter, count)
-            writeWordsInFile(file, remainingWords)
-        print(Dict.getNumberOfWords())
-        count += 1
-    # import os
-    # os.remove(file)
+def getInput():
+    letters = input('print Letters \n')
+    values = input('print Values \n')
+    return list(zip(letters, values))
 
-def reduceListOfWords(status, wordsInFile, letter, position):
-    remainingWords = ''
-    for word in wordsInFile:
-        if status == LETTER_NOT_EXIST:
-            remainingWords += get_word_without_letter(word, letter)
-        if status == LETTER_EXIST_IN_OTHER_POSITION:
-            remainingWords += get_word_with_letter_and_without_letter_in_position(word, letter, position)
-        if status == LETTER_IN_PLACE:
-            remainingWords += get_word_with_letter_in_that_position(word, letter, position)
-    return remainingWords
+def reduceListOfWords(letter_value, words, position):
+    letter = letter_value[0]
+    status = int(letter_value[1])
 
-def analizeRepeated(letters, analizedLetter, values, position, wordsInFile, file):
-    # la variable file passa por aquí simplemente para ser un parametro en otra funcion. suena a global
-    # se puede afinar mas:
-    # si el valor inferior es 0 y el superior es 1, elimina todas las palabras con esa letra en esa posicion
-    # si el valor es 0 y el superior es 2, elimina todas las palabras con esa letra en todas las posiciones menos en la de valor 2
-    # si el valor es 1 y el superior 2, elimina las palabras que no contengan como minimo 2 veces ese valor
+    if status == LETTER_NOT_EXIST:
+        outputWords = [word for word in words if letter_not_in_word(letter,word)]
+    if status == LETTER_EXIST_IN_OTHER_POSITION:
+        outputWords = [word for word in words if letter_in_word_in_different_position(letter,word, position)]
+    if status == LETTER_IN_PLACE:
+        outputWords = [word for word in words if letter_in_word_in_position(letter, word, position)]
+    return outputWords
 
-    timesRepeated = letters.count(analizedLetter)
-    if timesRepeated != 1:
+def letter_not_in_word(letter, word):
+    return letter not in word
+def letter_in_word_in_different_position(letter, word, position):
+    return letter in word and word[position] != letter
+def letter_in_word_in_position(letter, word, position):
+    return word[position] == letter
+
+def letterRepeated(currentLetter, word):
+    currentChar = currentLetter[0]
+    currentValue = currentLetter[1]
+    wordChar = [letters[0] for letters in word]
+    wordValues = [letters[1] for letters in word]
+
+    timesRepeat = word.count(currentLetter)
+    if timesRepeat != 1:
         i = 0
-        for letter in letters:
-            if letter == analizedLetter and values[position] < values[i]:
-                remainingWords = ''
-                for word in wordsInFile:
-                    remainingWords += get_words_without_letter_in_position(word, letter, position)
-                writeWordsInFile(file, remainingWords)
+        for letter in wordChar:
+            if letter == currentChar and currentValue < wordValues[i]:
                 return True
-            i += 1
-    return False
+            i+=1
+        return True
 
-def get_words_without_letter_in_position(word, letter, position):
-    return word if word[position] != letter else ''
+def reduceRepeated(letter_value, words, position):
+    return [word for word in words if letter_in_word_in_different_position(letter_value[0], word, position)]
 
-def get_word_without_letter(word, letter):
-    return word if letter not in word else ''
-
-def get_word_with_letter_and_without_letter_in_position(word, letter, position):
-    return word if (letter in word) and (word[position] != letter) else ''
-
-def get_word_with_letter_in_that_position(word, letter, position):
-    return word if word[position] == letter else ''
-
-def createFile():
-    filename = generateFileName()
-    from os.path import exists
-    if not exists(filename):
-        populateFile(filename)
-    return filename
-
-def generateFileName():
-    from datetime import datetime
-    date = datetime.today().strftime('%Y-%m-%d')
-    return date + '.txt'
-
-def writeWordsInFile(file, remainingWords):
-    with open(file, 'w') as file:
-        file.write(remainingWords)
-
-def populateFile(file):
-    with open('five_char_words.txt', 'r') as fullWordsList:
-        words = ''
-        for word in fullWordsList:
-            words += word
-        writeWordsInFile(file, words)
-
-deleteWords(wordleWord)
+File = File()
+wordleWord = getInput()
+print(File.getNumberOfWords())
+count = 0
+for letter_value in wordleWord:
+    currentWords = File.getWords()   
+    repeated = letterRepeated(letter_value, wordleWord)
+    if not repeated:
+        newWords = reduceListOfWords(letter_value, currentWords, count)
+    else:
+        newWords = reduceRepeated(letter_value, currentWords, count)
+    File.setWords(newWords)
+    print(File.getNumberOfWords())
+    count+=1
