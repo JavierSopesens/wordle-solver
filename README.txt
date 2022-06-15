@@ -1,5 +1,13 @@
 Program to help you to play WORDLE in spanish
 
+Reorganize in folders:
+    1. Create dicctionary
+    2. Function to solve/reduce list
+    3. Help to find better words
+    4. Add GitHub actions
+
+
+
 this folder contains:
     - 0.es.txt                  list of all the words in spanish
     - 1.read_doc.py             with the script to create and fill txt with only words with 5 characters
