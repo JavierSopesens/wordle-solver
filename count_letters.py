@@ -1,4 +1,4 @@
-with open('five_char_words.txt', 'r') as file:
+with open('Dictionary/trimedDictionary.txt', 'r') as file:
     words = file.readlines()
 
 # por cada letra, la introduce en el diccionario letters y cada vez que aparezca, le suma 1
@@ -10,6 +10,8 @@ for word in words:
             letters[char] = 1
         else:
             letters[char] +=1 
+
+            
 # asignale una puntuación a una palabra dependiendo de las veces que aparezcan sus letras
 dictionary = {} 
 for word in words:

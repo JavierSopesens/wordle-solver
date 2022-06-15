@@ -5,13 +5,13 @@ LETTER_EXIST_IN_OTHER_POSITION = 1
 LETTER_IN_PLACE = 2
 
 
-def getInput():
+def getInput() -> list:
     letters = input('print Letters \n')
     values = input('print Values \n')
     return list(zip(letters, values))
 
 
-def reduceListOfWords(letter_value, words, position):
+def reduceListOfWords(letter_value: tuple, words: list, position: int) -> list:
     letter = letter_value[0]
     status = int(letter_value[1])
 
@@ -27,19 +27,19 @@ def reduceListOfWords(letter_value, words, position):
     return outputWords
 
 
-def letter_not_in_word(letter, word):
+def letter_not_in_word(letter: str, word: list[str]) -> bool:
     return letter not in word
 
 
-def letter_in_word_in_different_position(letter, word, position):
+def letter_in_word_in_different_position(letter: str, word: list[str], position: int) -> bool:
     return letter in word and word[position] != letter
 
 
-def letter_in_word_in_position(letter, word, position):
+def letter_in_word_in_position(letter: str, word: list[str], position: int) -> bool:
     return word[position] == letter
 
 
-def letterRepeated(currentLetter, word):
+def letterRepeated(currentLetter: str, word: list[str]) -> bool:
     currentChar = currentLetter[0]
     currentValue = currentLetter[1]
     wordChar = [letters[0] for letters in word]
@@ -52,10 +52,12 @@ def letterRepeated(currentLetter, word):
             if letter == currentChar and currentValue < wordValues[i]:
                 return True
             i += 1
-        return True
+
+    return False
 
 
-def reduceRepeated(letter_value, words, position):
+def reduceRepeated(letter_value: tuple, words: list, position: int):
+    # can be improved: in case 0-1,0-2,1-2
     return [word for word in words if letter_in_word_in_different_position(letter_value[0], word, position)]
 
 
