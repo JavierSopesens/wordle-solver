@@ -3,15 +3,18 @@ def getFileName():
     date = datetime.today().strftime('%Y-%m-%d')
     return date + '.txt'
 
+
 def importContent():
-    with open('trimedDictionary.txt', 'r') as fullWordsList:
+    with open('Dictionary/trimedDictionary.txt', 'r') as fullWordsList:
         words = [word for word in fullWordsList]
         return words
+
 
 def generateFile(name, content):
     with open(name, 'w') as file:
         for word in content:
             file.write(word)
+
 
 class File:
     def __init__(self):
@@ -24,7 +27,7 @@ class File:
     def getWords(self):
         with open(self.name) as document:
             return(document.readlines())
-    
+
     def getNumberOfWords(self):
         return len(self.getWords())
 

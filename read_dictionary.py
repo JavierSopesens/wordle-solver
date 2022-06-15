@@ -10,7 +10,7 @@ def trimWordsList(words: list, wordSize: int = 5) -> list:
 
 
 def writeTrimedList(words: list):
-    f = open("trimedDictionary.txt", "w+")
+    f = open("Dictionary/trimedDictionary.txt", "w+")
     for word in words:
         f.write(word)
 
