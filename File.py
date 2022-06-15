@@ -4,7 +4,7 @@ def getFileName():
     return date + '.txt'
 
 def importContent():
-    with open('five_char_words.txt', 'r') as fullWordsList:
+    with open('trimedDictionary.txt', 'r') as fullWordsList:
         words = [word for word in fullWordsList]
         return words
 
