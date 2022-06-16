@@ -1,29 +1,21 @@
-Program to help you to play WORDLE in spanish
-
-Reorganize in folders:
-    1. Create dicctionary
-    2. Function to solve/reduce list
-    3. Help to find better words
-    4. Add GitHub actions
-
-
-
 this folder contains:
-    - 0.es.txt                  list of all the words in spanish
-    - 1.read_doc.py             with the script to create and fill txt with only words with 5 characters
-    - 2.five_char_words.txt     contains every word in spanish with 5 characters
-    - 3.read_five_char_words.py to check the content of five_char_words.txt
+    Dictionary ------------------> FOLDER to place different dictionaries and a file with trimed words
+    - 1.read_doc.py -------------> SCRIPT to create txt and fill it with the selected trimmed dictionary
+    - 2.test_read_dictionary.py -> TEST read_doc.py
+    - 3.solver.py ---------------> SCRIPT contains the logic to solve WORDLE
+    - 4.test_solver.py ----------> TEST solver.py
+    - 5.File.py -----------------> CLASS File used in function.py
+    - 6.test_File.py ------------> TEST File.py
+    - 7.suggester.py ------------> SCRIPT to suggest best word to use
+    - 8.test_suggester.py -------> TEST suggester.py
 
-NEXT STEPS
-  - solucionar bug por el cual si una letra se repite la evaluará dos veces con resultados diferentes
-    -si por ejemplo tenemos (cacan, 22000)(true story) 
-      evaluara que solo pueden haber palabras con c y 
-      evaluara que solo pueden haber palabras sin c
-  - mejorar la forma en la que los datos son introducidos. Tener que alterar los valores del array dentro del documento es un rollo
-  - control de variables
-  - documento aconsejador de palabras:
-    - recorrer el documento con las palabras
-    - asignar un valor a cada letra en funcion de las veces que aparece en el documento
-    - sumar los valores de cada letra de la palabra (la palabra pasa a tener un valor numérico)
-    - mostrar las recomendaciones en funcion de su valor
-    - priorizar mostrar palabras sin letras repetidas
+  HOW IT WORKS:
+
+
+NEXT STEPS:
+  Fill test_solver.
+  Fill test_File.py.
+  Finish suggester.py.
+  Fill test_suggester.py.
+  Write README -> HOW IT WORKS.
+  Create toolbar
