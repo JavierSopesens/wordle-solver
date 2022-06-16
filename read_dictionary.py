@@ -1,4 +1,9 @@
-def getAllWords(file: str = 'es.txt') -> list:
+def getAllWords(file: str = 'es.txt') -> list: 
+    from pathlib import Path
+    my_file = Path('Dictionary\\'+file)
+    if not my_file.exists():
+        raise ValueError('file does not exist')
+
     with open('Dictionary\\' + file, encoding='utf-8') as file:
         words = [line.rstrip() for line in file]
     return words

@@ -16,14 +16,11 @@ def reduceListOfWords(letter_value: tuple, words: list, position: int) -> list:
     status = int(letter_value[1])
 
     if status == LETTER_NOT_EXIST:
-        outputWords = [
-            word for word in words if letter_not_in_word(letter, word)]
+        outputWords = [word for word in words if letter_not_in_word(letter, word)]
     if status == LETTER_EXIST_IN_OTHER_POSITION:
-        outputWords = [word for word in words if letter_in_word_in_different_position(
-            letter, word, position)]
+        outputWords = [word for word in words if letter_in_word_in_different_position(letter, word, position)]
     if status == LETTER_IN_PLACE:
-        outputWords = [word for word in words if letter_in_word_in_position(
-            letter, word, position)]
+        outputWords = [word for word in words if letter_in_word_in_position(letter, word, position)]
     return outputWords
 
 
