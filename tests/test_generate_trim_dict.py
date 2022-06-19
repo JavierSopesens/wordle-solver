@@ -2,8 +2,6 @@ from main.generate_trim_dict import getAllWords, trimWordsList, writeTrimedList
 import pytest
 
 # getAllWords TESTS
-
-
 def test_getAllWords_use_case_empty_arg() -> None:
     words = getAllWords()
     assert type(words) == list
@@ -115,6 +113,28 @@ def test_trimWordsList_edge_case_wordSize_minus1() -> None:
         trimWordsList(words, -1)
 
 # writeTrimList TESTS
-# not passing arg
-# empty list
-# full list
+def test_writeTrimList_edge_case_wo_arg() -> None:
+    # not arg
+    with pytest.raises(TypeError):
+        writeTrimedList()
+
+
+def test_writeTrimList_edge_case_arg_not_list() -> None:
+    # arg not list
+    with pytest.raises(TypeError):
+        writeTrimedList(12345)
+
+
+def test_writeTrimList_edge_case_empty_list() -> None:
+    # arg empty list
+    input = []
+    writeTrimedList(input)
+    with open('Dictionary/trimedDictionary.txt') as file:
+        assert len(file.readlines()) == 0
+
+
+
+def test_writeTrimList_edge_case_arg_string() -> None:
+    input = 'testtest'
+    with pytest.raises(TypeError):
+        writeTrimedList(input)

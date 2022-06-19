@@ -2,7 +2,6 @@ def getAllWords(file: str = 'es.txt') -> list:
     # input is str
     if type(file) != str:
         raise TypeError('file have to be string format')
-
     # file exists
     from pathlib import Path
     my_file = Path('Dictionary\\'+file)
@@ -15,11 +14,13 @@ def getAllWords(file: str = 'es.txt') -> list:
 
 
 def trimWordsList(words: list[str], wordSize: int = 5) -> list:
-    # if not all([words for word in words if type(word) == str]):
+    # right type for words
     if not isinstance(words,list):
         raise TypeError('format error: words')
+    # right type for wordsSize
     if not type(wordSize) == int:
         raise TypeError('format error: wordSize')
+    # not negative in wordSize
     if wordSize < 0:
         raise ValueError('word size cannot be negative')
         
@@ -27,7 +28,11 @@ def trimWordsList(words: list[str], wordSize: int = 5) -> list:
     return trimedList
 
 
-def writeTrimedList(words: list):
+def writeTrimedList(words: list) -> None:
+    # check input format
+    if not isinstance(words, list):
+        raise TypeError('format error')
+        
     f = open("Dictionary/trimedDictionary.txt", "w+")
     for word in words:
         f.write(word+'\n')
