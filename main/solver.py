@@ -1,49 +1,23 @@
 from Dictionary import Dictionary
-
+from userInterface import getMatches
 WORD_LENGTH = 5
 DICTIONARY_FILE = 'es.txt'
 
 myDict = Dictionary(DICTIONARY_FILE, WORD_LENGTH)
 attempts = 0
 
-def getLetters()->list[str]:
-    while True:
-        letters = input('Write Word: ')
-        if len(letters) != WORD_LENGTH:
-            print('check the lenght of the word')
-            continue
-        if not letters.isalpha():
-            print('word have to be composed only by letters')
-            continue
-        return letters
-
-def getValues()->list[str]:
-    while True:
-        values = input('Write Values: ')
-        if len(values) != WORD_LENGTH:
-            print('check the lenght of the values')
-            continue
-        if not values.isnumeric():
-            print('values have to be composed only by numbers')
-            continue
-        if any(char not in '012' for char in values):
-            print('values can only be 0, 1 or 2')
-            continue
-        return values
-
-def getMatches() -> list[dict]:
-    letters = getLetters()
-    values = getValues()
-
-    return dict(zip(letters, values))
-
 # loop game
 while len(myDict.words) != 1 and attempts!= 5:
     print(f'remaining possible words: {len(myDict.words)}')
     print(myDict.words)
     matches = getMatches()
-    for index, (key, value) in enumerate(matches.items()):
-        myDict.reduceList(key, int(value), index)
+    for index, match in enumerate(matches):
+        myDict.reduceList(match[0], int(match[1]), index)
     # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
-    
+    # TODO suggestions module
+    # TODO analisis repeated letters. si la palabra a buscar es audio y uso avala,
+    # recibire un valor de 20000. lo cual borrara todos los elementos de la lista
+    #   pero no dejara de funcionar
+    # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
+    # control de errores si la lista esta vacia
     attempts += 1
