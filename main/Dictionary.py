@@ -28,17 +28,13 @@ class Dictionary:
             self.deleteWordsWithoutLetter(letter, position)
 
     def deleteWordsWithLetter(self, letter:str):
-        for word in self.words:
-            if letter in word:
-                self.words.remove(word)
+        self.words = [word for word in self.words if letter not in word]
 
     def deleteWordsWithLetterInPosition(self, letter:str, position:int):
-        # esta funcion parece fallar bajo audio - 10020
-        for word in self.words:
-            if letter not in word and word[position] is letter:
-                self.words.remove(word)
+        self.words = [word for word in self.words if letter in word and word[position] is not letter]
     
-    def deleteWordsWithoutLetter(self, letter:str, position:int):
+    def deleteWordsWithoutLetterInPosition(self, letter:str, position:int):
+        self.words = [word for word in self.words if letter in word[position]]
         for word in self.words:
             if letter not in word[position]:
                 self.words.remove(word)
