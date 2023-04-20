@@ -15,7 +15,6 @@ class Dictionary:
             raise FileNotFoundError(f'File {dict_file} not found')
 
     def reduceList(self, letter:str, value:int, position:int):
-        # falta escribir toda la documentacion y test de esto
         NOT_IN_THE_WORD = 0
         IN_WORD_BUT_BAD_POSITION = 1
         IN_WORD_AND_IN_PLACE = 2
@@ -25,7 +24,7 @@ class Dictionary:
         if value == IN_WORD_BUT_BAD_POSITION:
             self.deleteWordsWithLetterInPosition(letter, position)
         if value == IN_WORD_AND_IN_PLACE:
-            self.deleteWordsWithoutLetter(letter, position)
+            self.deleteWordsWithoutLetterInPosition(letter, position)
 
     def deleteWordsWithLetter(self, letter:str):
         self.words = [word for word in self.words if letter not in word]
