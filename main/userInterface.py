@@ -11,7 +11,7 @@ def getLetters()->list[str]:
             continue
         return letters
 
-def getValues()->list[str]:
+def getValues()->list[int]:
     while True:
         values = input('Write Values: ')
         if len(values) != WORD_LENGTH:
@@ -23,10 +23,12 @@ def getValues()->list[str]:
         if any(char not in '012' for char in values):
             print('values can only be 0, 1 or 2')
             continue
-        return values
+        return list(map(int,values))
 
 def getMatches() -> list[dict]:
     letters = getLetters()
     values = getValues()
-
-    return list(zip(letters, values))
+    # this value wont be a list of dict cause keys cannot be repeated, and in that case, it would be
+    # neither can be a set or a tuple cause we need to change values in specific cases
+    # so it is a list of lists
+    return list(map(list,zip(letters, values)))
