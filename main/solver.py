@@ -7,37 +7,41 @@ DICTIONARY_FILE = 'es.txt'
 myDict = Dictionary(DICTIONARY_FILE, WORD_LENGTH)
 attempts = 0
 
-# editar esta funcion. varios codesmell
+def handleRepeated(matches: list) -> list:
+    sorted_matches = sortMatchesAlphabetically(matches)
+    return controlRepeatedMatches(sorted_matches, matches)
+
+def sortMatchesAlphabetically(matches: list) ->list:
+    return sorted(matches, key = lambda x: ord(x[0]))
+
 # magic numbers
-# hace varias cosas en una misma funcion
-# primero ordena, luego evalue repeticiones y luego cambia valores 
-def controlDuplicated(matches: list) -> list:
-    sorted_matches = sorted(matches, key=lambda x: ord(x[0]))
-    anterior = sorted_matches[0]
-    for elemento in sorted_matches[1:]:
-        if elemento[0] == anterior[0]:
-            if elemento[1] == 0 and anterior[1] == 0:
-                matches[matches.index(anterior)][1] = 3
-            if elemento[1] == 0 and anterior[1] != 0:
-                matches[matches.index(elemento)][1] = 3
-            if elemento[1] != 0 and anterior[1] == 0:
-                matches[matches.index(anterior)][1] = 3
-        anterior = elemento
-    return matches
+def controlRepeatedMatches(sorted_matches:list, original_matches:list)->list:
+    previous = sorted_matches[0]
+    for current in sorted_matches[1:]:
+        if current[0] == previous[0]:
+            if current[1] == 0 and previous[1] == 0:
+                original_matches[original_matches.index(previous)][1] = -1
+            if current[1] == 0 and previous[1] != 0:
+                original_matches[original_matches.index(current)][1] = -1
+            if current[1] != 0 and previous[1] == 0:
+                original_matches[original_matches.index(previous)][1] = -1
+        previous = current
+    return original_matches
 
+def main():
+    while len(myDict.words) != 1 and attempts != 5:
+        print(f'remaining possible words: {len(myDict.words)}')
+        print(myDict.words)
+        matches = getMatches()
 
-# loop game
-while len(myDict.words) != 1 and attempts != 5:
-    print(f'remaining possible words: {len(myDict.words)}')
-    print(myDict.words)
-    matches = getMatches()
-
-    # si en la lista hay dos letras iguales y una es un 0, no la pases
-    matches = controlDuplicated(matches)
-    for index, match in enumerate(matches):
-        myDict.reduceList(match[0], match[1], index)
-    # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
-    # TODO suggestions module
-    # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
-    # control de errores si la lista esta vacia
-    attempts += 1
+        matches = (matches)
+        for index, match in enumerate(matches):
+            myDict.reduceList(match[0], match[1], index)
+        # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
+        # TODO suggestions module
+        # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
+        # control de errores si la lista esta vacia
+        attempts += 1
+        
+if 'name' == __name__:
+    main()
