@@ -1,4 +1,6 @@
 from Match import Match
+from config import *
+
 class Dictionary:
     def __init__(self, dict_file: str, word_length: int = 5)->None:
         if type(word_length)!=int:
@@ -16,10 +18,6 @@ class Dictionary:
             raise FileNotFoundError(f'File {dict_file} not found')
 
     def reduceList(self, match:Match, position:int):
-        NOT_IN_THE_WORD = 0
-        IN_WORD_BUT_BAD_POSITION = 1
-        IN_WORD_AND_IN_PLACE = 2
-
         if match.value == NOT_IN_THE_WORD:
             self.deleteWordsWithLetter(match.letter)
         if match.value == IN_WORD_BUT_BAD_POSITION:

@@ -1,5 +1,5 @@
 from Match import Match
-WORD_LENGTH = 5
+from config import *
 
 def getLetters()->list[str]:
     while True:

@@ -1,9 +1,7 @@
 from Dictionary import Dictionary
 from userInterface import getMatches
 from Match import Match
-
-WORD_LENGTH = 5
-DICTIONARY_FILE = 'es.txt'
+from config import *
 
 myDict = Dictionary(DICTIONARY_FILE, WORD_LENGTH)
 attempts = 0
