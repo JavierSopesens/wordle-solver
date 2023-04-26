@@ -18,11 +18,11 @@ class Dictionary:
             raise FileNotFoundError(f'File {dict_file} not found')
 
     def reduceList(self, match:Match, position:int):
-        if match.value == NOT_IN_THE_WORD:
+        if match.status == NOT_IN_THE_WORD:
             self.deleteWordsWithLetter(match.letter)
-        if match.value == IN_WORD_BUT_BAD_POSITION:
+        if match.status == IN_WORD_BUT_BAD_POSITION:
             self.deleteWordsWithLetterInPosition(match.letter, position)
-        if match.value == IN_WORD_AND_IN_PLACE:
+        if match.status == IN_WORD_AND_IN_PLACE:
             self.deleteWordsWithoutLetterInPosition(match.letter, position)
 
     def deleteWordsWithLetter(self, letter:str):

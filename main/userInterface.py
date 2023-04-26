@@ -28,6 +28,6 @@ def getValues()->list[int]:
 
 def getMatches() -> list[dict]:
     letters = getLetters()
-    values = getValues()
+    statues = getValues()
 
-    return [Match(letter, value) for letter, value in zip(letters, values)]
+    return [Match(letter, statues) for letter, statues in zip(letters, statues)]
