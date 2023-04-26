@@ -1,5 +1,6 @@
 from Dictionary import Dictionary
 from userInterface import getMatches
+from Match import Match
 
 WORD_LENGTH = 5
 DICTIONARY_FILE = 'es.txt'
@@ -12,36 +13,42 @@ def handleRepeated(matches: list) -> list:
     return controlRepeatedMatches(sorted_matches, matches)
 
 def sortMatchesAlphabetically(matches: list) ->list:
-    return sorted(matches, key = lambda x: ord(x[0]))
+    return sorted(matches, key = lambda i: i.letter)
 
 # magic numbers
+# its possible to clearify parameters?
+# value change to status
 def controlRepeatedMatches(sorted_matches:list, original_matches:list)->list:
     previous = sorted_matches[0]
     for current in sorted_matches[1:]:
-        if current[0] == previous[0]:
-            if current[1] == 0 and previous[1] == 0:
-                original_matches[original_matches.index(previous)][1] = -1
-            if current[1] == 0 and previous[1] != 0:
-                original_matches[original_matches.index(current)][1] = -1
-            if current[1] != 0 and previous[1] == 0:
-                original_matches[original_matches.index(previous)][1] = -1
+        if current.letter == previous.letter:
+            if current.value == 0 and previous.value == 0:
+                original_matches[original_matches.index(previous)].value = -1
+            if current.value == 0 and previous.value != 0:
+                original_matches[original_matches.index(current)].value = -1
+            if current.value != 0 and previous.value == 0:
+                original_matches[original_matches.index(previous)].value = -1
         previous = current
     return original_matches
 
-def main():
-    while len(myDict.words) != 1 and attempts != 5:
-        print(f'remaining possible words: {len(myDict.words)}')
-        print(myDict.words)
-        matches = getMatches()
+while len(myDict.words) != 1 and attempts != 5:
+    print(f'remaining possible words: {len(myDict.words)}')
+    print(myDict.words)
+    matches = getMatches()
 
-        matches = (matches)
-        for index, match in enumerate(matches):
-            myDict.reduceList(match[0], match[1], index)
-        # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
-        # TODO suggestions module
-        # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
-        # control de errores si la lista esta vacia
-        attempts += 1
-        
-if 'name' == __name__:
-    main()
+    matches = handleRepeated(matches)
+    for index, match in enumerate(matches):
+        myDict.reduceList(match, index)
+    # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
+    # TODO suggestions module
+    # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
+    # control de errores si la lista esta vacia
+    attempts += 1
+
+
+    # crear funcion main
+    # eliminar magic numbers
+    # fichero config con las globales
+    # a partir de la linea 19 de este documento 
+    #   y en todo el doc Dictionary.py 
+    #   no estan implementadas las clases match

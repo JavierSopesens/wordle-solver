@@ -1,3 +1,4 @@
+from Match import Match
 WORD_LENGTH = 5
 
 def getLetters()->list[str]:
@@ -28,7 +29,5 @@ def getValues()->list[int]:
 def getMatches() -> list[dict]:
     letters = getLetters()
     values = getValues()
-    # this value wont be a list of dict cause keys cannot be repeated, and in that case, it would be
-    # neither can be a set or a tuple cause we need to change values in specific cases
-    # so it is a list of lists
-    return list(map(list,zip(letters, values)))
+
+    return [Match(letter, value) for letter, value in zip(letters, values)]
