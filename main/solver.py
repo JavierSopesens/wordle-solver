@@ -1,10 +1,8 @@
 from Dictionary import Dictionary
+from File import File
 from userInterface import getMatches
 from Match import Match
 from config import *
-
-myDict = Dictionary(DICTIONARY_FILE, WORD_LENGTH)
-attempts = 0
 
 def handleRepeated(matches: list) -> list:
     sorted_matches = sortMatchesAlphabetically(matches)
@@ -13,28 +11,34 @@ def handleRepeated(matches: list) -> list:
 def sortMatchesAlphabetically(matches: list) ->list:
     return sorted(matches, key = lambda i: i.letter)
 
-# magic numbers
 # its possible to clearify parameters?
-# value change to status
-def controlRepeatedMatches(sorted_matches:list, original_matches:list)->list:
+# if bombo 01022, combierte la primera o en -1, cuando deberia mantenerlo en 1
+#o deberiamos crear una clase especial 3, (mas de 1 y en otro sitio)
+
+# si vamos a poner todos los casos posibles, seria recomendable per cuando usar switch cases en python
+def controlRepeatedMatches(sorted_matches:list[Match], original_matches:list[Match])->list[Match]:
     previous = sorted_matches[0]
     for current in sorted_matches[1:]:
         if current.letter == previous.letter:
-            if current.value == 0 and previous.value == 0:
-                original_matches[original_matches.index(previous)].value = -1
-            if current.value == 0 and previous.value != 0:
-                original_matches[original_matches.index(current)].value = -1
-            if current.value != 0 and previous.value == 0:
-                original_matches[original_matches.index(previous)].value = -1
+            if current.status is NOT_IN_THE_WORD and previous.status is NOT_IN_THE_WORD:
+                original_matches[original_matches.index(previous)].status = TO_AVOID
+            if current.status is NOT_IN_THE_WORD and previous.status is not NOT_IN_THE_WORD:
+                original_matches[original_matches.index(current)].status = TO_AVOID
+            if current.status is not NOT_IN_THE_WORD and previous.status is NOT_IN_THE_WORD:
+                original_matches[original_matches.index(previous)].status = TO_AVOID
         previous = current
     return original_matches
 
+
+fileDict = File('es.txt')
+myDict = Dictionary(fileDict, WORD_LENGTH)
+attempts = 0
 while len(myDict.words) != 1 and attempts != 5:
     print(f'remaining possible words: {len(myDict.words)}')
     print(myDict.words)
     matches = getMatches()
-
     matches = handleRepeated(matches)
+
     for index, match in enumerate(matches):
         myDict.reduceList(match, index)
     # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
@@ -45,8 +49,3 @@ while len(myDict.words) != 1 and attempts != 5:
 
 
     # crear funcion main
-    # eliminar magic numbers
-    # fichero config con las globales
-    # a partir de la linea 19 de este documento 
-    #   y en todo el doc Dictionary.py 
-    #   no estan implementadas las clases match
