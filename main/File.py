@@ -1,5 +1,5 @@
 class File:
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
         self.path = 'Dictionary/'+self.name
 

@@ -4,15 +4,14 @@ from userInterface import getMatches
 from Match import Match
 from config import *
 
-def handleRepeated(matches: list) -> list:
+def handleRepeated(matches: list[Match]) -> list[Match]:
     sorted_matches = sortMatchesAlphabetically(matches)
     return controlRepeatedMatches(sorted_matches, matches)
 
-def sortMatchesAlphabetically(matches: list) ->list:
+def sortMatchesAlphabetically(matches: list[Match]) ->list[Match]:
     return sorted(matches, key = lambda i: i.letter)
 
 # its possible to clearify parameters?
-# if bombo 01022, combierte la primera o en -1, cuando deberia mantenerlo en 1
 #o deberiamos crear una clase especial 3, (mas de 1 y en otro sitio)
 
 # si vamos a poner todos los casos posibles, seria recomendable per cuando usar switch cases en python
@@ -30,7 +29,7 @@ def controlRepeatedMatches(sorted_matches:list[Match], original_matches:list[Mat
     return original_matches
 
 
-fileDict = File('es.txt')
+fileDict = File(DICTIONARY_FILE)
 myDict = Dictionary(fileDict, WORD_LENGTH)
 attempts = 0
 while len(myDict.words) != 1 and attempts != 5:
@@ -38,13 +37,15 @@ while len(myDict.words) != 1 and attempts != 5:
     print(myDict.words)
     matches = getMatches()
     matches = handleRepeated(matches)
-
+    
     for index, match in enumerate(matches):
         myDict.reduceList(match, index)
     # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
     # TODO suggestions module
     # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
     # control de errores si la lista esta vacia
+    # docstrings
+    # readme file
     attempts += 1
 
 

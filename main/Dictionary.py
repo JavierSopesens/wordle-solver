@@ -19,7 +19,6 @@ class Dictionary:
     def deleteWordsWithLetter(self, letter:str):
         self.words = [word for word in self.words if letter not in word]
 
-    # NO USA POSITION?
     def deleteWordsWithLetterInPosition(self, letter:str, position:int):
         self.words = [word for word in self.words if letter in word and word[position] is not letter]
     
