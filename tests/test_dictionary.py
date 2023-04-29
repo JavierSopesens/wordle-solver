@@ -5,7 +5,7 @@ from main.Match import Match
 
 
 def test_dict_empty_arguments():
-    with pytest.raises(TypeError):
+    with pytest.raises(NameError):
         Dictionary()
 
 

@@ -3,6 +3,7 @@ from File import File
 from userInterface import getMatches
 from Match import Match
 from config import *
+from suggester import Suggester
 
 def handleRepeated(matches: list[Match]) -> list[Match]:
     sorted_matches = sortMatchesAlphabetically(matches)
@@ -32,6 +33,7 @@ def controlRepeatedMatches(sorted_matches:list[Match], original_matches:list[Mat
 fileDict = File(DICTIONARY_FILE)
 myDict = Dictionary(fileDict, WORD_LENGTH)
 attempts = 0
+suggester = Suggester()
 while len(myDict.words) != 1 and attempts != 5:
     print(f'remaining possible words: {len(myDict.words)}')
     print(myDict.words)
@@ -40,6 +42,9 @@ while len(myDict.words) != 1 and attempts != 5:
     
     for index, match in enumerate(matches):
         myDict.reduceList(match, index)
+    suggester.countTimesEveryLetterIsRepeated(myDict)
+    print(suggester.timesLetterRepeated)
+    
     # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
     # TODO suggestions module
     # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
