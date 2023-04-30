@@ -33,20 +33,20 @@ def controlRepeatedMatches(sorted_matches:list[Match], original_matches:list[Mat
 fileDict = File(DICTIONARY_FILE)
 myDict = Dictionary(fileDict, WORD_LENGTH)
 attempts = 0
-suggester = Suggester()
 while len(myDict.words) != 1 and attempts != 5:
     print(f'remaining possible words: {len(myDict.words)}')
-    print(myDict.words)
+
     matches = getMatches()
     matches = handleRepeated(matches)
     
     for index, match in enumerate(matches):
         myDict.reduceList(match, index)
-    suggester.countTimesEveryLetterIsRepeated(myDict)
-    print(suggester.timesLetterRepeated)
+
+    suggester = Suggester(myDict)
+    suggester.countTimesEveryLetterIsRepeated()
+    suggester.sumWordScore()
+    print(suggester.recommendBestOption())
     
-    # mientras no esté hecho el modulo de sugerencia, hacer un print de las words
-    # TODO suggestions module
     # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
     # control de errores si la lista esta vacia
     # docstrings
