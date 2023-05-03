@@ -5,19 +5,18 @@ class Word:
     letters:list[str]
 
     def hasRepeatedLetters(self) -> bool:
-        repeated = False
-        for char in self.letters:
-            if self.letters.count(char) != 1:
-                repeated = True
-        return repeated
+        """
+        Checks if word has repeated letters.
+        """
+        return any(self.letters.count(char) != 1 for char in self.letters) 
                 
 class Suggester():
-    def __init__(self, Dictionary):
+    def __init__(self, Dictionary) -> None:
         self.words = Dictionary.words
         self.timesLetterRepeated:dict = self.countTimesEveryLetterIsRepeated()
         self.wordScore:dict = self.sumWordScore()
 
-    def countTimesEveryLetterIsRepeated(self):
+    def countTimesEveryLetterIsRepeated(self) -> dict:
         timesLetterRepeated = {}
         for word in self.words:
             for char in word:
@@ -27,7 +26,7 @@ class Suggester():
                     timesLetterRepeated[char] += 1
         return timesLetterRepeated
 
-    def sumWordScore(self):
+    def sumWordScore(self) -> dict:
         wordScore = {word:0 for word in self.words}
 
         for word in self.words:
@@ -35,10 +34,10 @@ class Suggester():
                 wordScore[word] += self.timesLetterRepeated[char]
         return wordScore
 
-    def sortWordsByScore(self):
+    def sortWordsByScore(self) -> dict:
         return sorted(self.wordScore, key = self.wordScore.get, reverse = True)
 
-    def getSpecificWords(self, originalWordsList, listWithRepeatedLetters: bool = False):
+    def getSpecificWords(self, originalWordsList, listWithRepeatedLetters: bool = False) -> list[str]:
         filteredWords = []
         for word in originalWordsList:
             word = Word(word)
