@@ -4,7 +4,6 @@ from dataclasses import dataclass
 class Word:
     letters:list[str]
 
-    @classmethod
     def hasRepeatedLetters(self) -> bool:
         repeated = False
         for char in self.letters:
@@ -15,24 +14,26 @@ class Word:
 class Suggester():
     def __init__(self, Dictionary):
         self.words = Dictionary.words
-        self.timesLetterRepeated:dict = {}
-        self.wordScore:dict = {}
+        self.timesLetterRepeated:dict = self.countTimesEveryLetterIsRepeated()
+        self.wordScore:dict = self.sumWordScore()
 
     def countTimesEveryLetterIsRepeated(self):
+        timesLetterRepeated = {}
         for word in self.words:
             for char in word:
-                if char not in self.timesLetterRepeated:
-                    self.timesLetterRepeated[char] = 1
+                if char not in timesLetterRepeated:
+                    timesLetterRepeated[char] = 1
                 else:
-                    self.timesLetterRepeated[char] += 1
+                    timesLetterRepeated[char] += 1
+        return timesLetterRepeated
 
     def sumWordScore(self):
-        for word in self.words:
-            self.wordScore[word] = 0
+        wordScore = {word:0 for word in self.words}
 
         for word in self.words:
             for char in word:
-                self.wordScore[word] += self.timesLetterRepeated[char]
+                wordScore[word] += self.timesLetterRepeated[char]
+        return wordScore
 
     def sortWordsByScore(self):
         return sorted(self.wordScore, key = self.wordScore.get, reverse = True)
@@ -47,7 +48,7 @@ class Suggester():
 
     def recommendBestOption(self)->str:
         sortedWordsByScore = self.sortWordsByScore()
-        wordsWithoutLettersRepeated = self.getSpecificWords(originalWordsList = sortedWordsByScore, listWithRepeatedLetters = False)
-        wordsWithLettersRepeated = self.getSpecificWords(originalWordsList = sortedWordsByScore, listWithRepeatedLetters = True)
+        wordsWithoutLettersRepeated = self.getSpecificWords(sortedWordsByScore, listWithRepeatedLetters = False)
+        wordsWithLettersRepeated    = self.getSpecificWords(sortedWordsByScore, listWithRepeatedLetters = True)
 
         return wordsWithLettersRepeated[0] if not wordsWithoutLettersRepeated else wordsWithoutLettersRepeated[0]

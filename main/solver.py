@@ -43,8 +43,6 @@ while len(myDict.words) != 1 and attempts != 5:
         myDict.reduceList(match, index)
 
     suggester = Suggester(myDict)
-    suggester.countTimesEveryLetterIsRepeated()
-    suggester.sumWordScore()
     print(suggester.recommendBestOption())
     
     # testeo de funciones de userInterface y de nuevas funciones de la clase dictionary
