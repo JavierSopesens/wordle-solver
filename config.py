@@ -3,8 +3,9 @@ WORD_LENGTH = 5
 
 # language to play wordle
 # POSSIBLES LANGUAGES ARE:
-#   currently it is only available in spanish,
-#   if you have another dictionary, you can use that one inserting the file in the Dictionary folder
+#   english -> eng
+#   spanish -> es
+#   if you have another dictionary, you can use that one inserting the file in the "glossary" folder
 LANGUAGE = 'es'
 DICTIONARY_FILE = LANGUAGE + '.txt'
 
