@@ -1,6 +1,6 @@
 import pytest
-from main.File import File
-from main.config import *
+from classes.File import File
+from classes.config import *
 
 def test_no_args():
     with pytest.raises(TypeError):

@@ -1,7 +1,7 @@
 import pytest
-from main.Dictionary import Dictionary
-from main.File import File
-from main.Match import Match
+from classes.Dictionary import Dictionary
+from classes.File import File
+from classes.Match import Match
 
 
 def test_dict_empty_arguments():
