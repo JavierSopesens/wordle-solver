@@ -1,5 +1,5 @@
+from config import *
 from classes import Match, File, Dictionary, Suggester
-from classes.config import *
 from classes.userInterface import getMatches
 
 

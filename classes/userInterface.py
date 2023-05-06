@@ -1,5 +1,5 @@
-from .Match import Match
-from .config import *
+from config import WORD_LENGTH
+from . import Match
 
 def getLetters()->list[str]:
     while True:
