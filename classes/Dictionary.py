@@ -1,15 +1,15 @@
-from config import NOT_IN_THE_WORD, IN_WORD_BUT_BAD_POSITION, IN_WORD_AND_IN_PLACE
+from config import MatchStatus
 
 class Dictionary:
     def __init__(self, words:list[str])->None:
         self.words = words
 
     def reduceList(self, letter_status:int, letter_char:str, position:int) -> None:
-        if letter_status == NOT_IN_THE_WORD:
+        if letter_status == MatchStatus.NOT_IN_THE_WORD:
             self.deleteWordsWithLetter(letter_char)
-        if letter_status == IN_WORD_BUT_BAD_POSITION:
+        if letter_status == MatchStatus.IN_WORD_BUT_BAD_POSITION:
             self.deleteWordsWithLetterInPosition(letter_char, position)
-        if letter_status == IN_WORD_AND_IN_PLACE:
+        if letter_status == MatchStatus.IN_WORD_AND_IN_PLACE:
             self.deleteWordsWithoutLetterInPosition(letter_char, position)
 
     def deleteWordsWithLetter(self, letter:str) -> None:

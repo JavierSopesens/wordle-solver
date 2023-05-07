@@ -1,3 +1,5 @@
+from enum import Enum
+
 # length of the word to search
 WORD_LENGTH = 5
 
@@ -14,7 +16,8 @@ DICTIONARY_FILE = LANGUAGE + '.txt'
 
 # possible status of values associated to the chosen letters in every word
 # DO NOT CHANGE THESE VALUES
-TO_AVOID = -1 # only used in control of duplicated matches. final user do not uses it.
-NOT_IN_THE_WORD = 0
-IN_WORD_BUT_BAD_POSITION = 1
-IN_WORD_AND_IN_PLACE = 2
+class MatchStatus(Enum):
+    TO_AVOID = -1 # only used in control of duplicated matches. final user do not uses it.
+    NOT_IN_THE_WORD = 0
+    IN_WORD_BUT_BAD_POSITION = 1
+    IN_WORD_AND_IN_PLACE = 2
