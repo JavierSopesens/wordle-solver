@@ -1,6 +1,9 @@
 # length of the word to search
 WORD_LENGTH = 5
 
+# max number of attempts to find the word
+MAX_ATTEMPTS = 5
+
 # language to play wordle
 # POSSIBLES LANGUAGES ARE:
 #   english -> eng
