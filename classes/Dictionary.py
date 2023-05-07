@@ -1,20 +1,16 @@
-from config import WORD_LENGTH, NOT_IN_THE_WORD, IN_WORD_BUT_BAD_POSITION, IN_WORD_AND_IN_PLACE
-from . import Match, File
+from config import NOT_IN_THE_WORD, IN_WORD_BUT_BAD_POSITION, IN_WORD_AND_IN_PLACE
 
 class Dictionary:
-    def __init__(self, file:File, wordLength: int = WORD_LENGTH)->None:
-        if type(wordLength)!=int:
-            raise ValueError(f'{wordLength} have to be an integer')
-        self.file = file
-        self.words = self.file.getContentByLength(wordLength)
+    def __init__(self, words:list[str])->None:
+        self.words = words
 
-    def reduceList(self, match:Match, position:int) -> None:
-        if match.status == NOT_IN_THE_WORD:
-            self.deleteWordsWithLetter(match.letter)
-        if match.status == IN_WORD_BUT_BAD_POSITION:
-            self.deleteWordsWithLetterInPosition(match.letter, position)
-        if match.status == IN_WORD_AND_IN_PLACE:
-            self.deleteWordsWithoutLetterInPosition(match.letter, position)
+    def reduceList(self, letter_status:int, letter_char:str, position:int) -> None:
+        if letter_status == NOT_IN_THE_WORD:
+            self.deleteWordsWithLetter(letter_char)
+        if letter_status == IN_WORD_BUT_BAD_POSITION:
+            self.deleteWordsWithLetterInPosition(letter_char, position)
+        if letter_status == IN_WORD_AND_IN_PLACE:
+            self.deleteWordsWithoutLetterInPosition(letter_char, position)
 
     def deleteWordsWithLetter(self, letter:str) -> None:
         self.words = [word for word in self.words if letter not in word]
