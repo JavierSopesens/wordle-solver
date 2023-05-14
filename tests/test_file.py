@@ -1,5 +1,5 @@
 import pytest
-from classes.File import File
+from classes import File
 from config import *
 
 def test_no_args():

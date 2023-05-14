@@ -5,14 +5,11 @@ class Word:
     letters:list[str]
 
     def hasRepeatedLetters(self) -> bool:
-        """
-        Checks if word has repeated letters.
-        """
         return any(self.letters.count(char) != 1 for char in self.letters) 
                 
 class Suggester():
-    def __init__(self, Dictionary) -> None:
-        self.words = Dictionary.words
+    def __init__(self, words: list[str]) -> None:
+        self.words = words
         self.timesLetterRepeated:dict = self.countTimesEveryLetterIsRepeated()
         self.wordScore:dict = self.sumWordScore()
 
@@ -37,7 +34,7 @@ class Suggester():
     def sortWordsByScore(self) -> dict:
         return sorted(self.wordScore, key = self.wordScore.get, reverse = True)
 
-    def getSpecificWords(self, originalWordsList, listWithRepeatedLetters: bool = False) -> list[str]:
+    def getSpecificWords(self, originalWordsList, listWithRepeatedLetters: bool) -> list[str]:
         filteredWords = []
         for word in originalWordsList:
             word = Word(word)
@@ -49,5 +46,7 @@ class Suggester():
         sortedWordsByScore = self.sortWordsByScore()
         wordsWithoutLettersRepeated = self.getSpecificWords(sortedWordsByScore, listWithRepeatedLetters = False)
         wordsWithLettersRepeated    = self.getSpecificWords(sortedWordsByScore, listWithRepeatedLetters = True)
-
+        # print(f"length wordds w/o repeated:{len(wordsWithoutLettersRepeated)}")
+        # print(f"length wordds w/ repeated:{len(wordsWithLettersRepeated)}")
+        
         return wordsWithLettersRepeated[0] if not wordsWithoutLettersRepeated else wordsWithoutLettersRepeated[0]

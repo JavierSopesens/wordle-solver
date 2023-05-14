@@ -1,35 +1,30 @@
 import pytest
-from classes.Dictionary import Dictionary
-from classes.File import File
-from classes.Match import Match
+from classes import Dictionary, File
+from config import DICTIONARY_FILE, WORD_LENGTH
 
 
-def test_dict_empty_arguments():
-    with pytest.raises(NameError):
+def test_dict_no_arguments():
+    with pytest.raises(TypeError):
         Dictionary()
 
-
-def test_dict_without_dict_file():
+def test_dict_empty_words():
     with pytest.raises(TypeError):
-        Dictionary(word_length=4)
+        Dictionary()
 
+def test_reduceList_no_args():
+    pass
+    # myFile = File(DICTIONARY_FILE)
+    # myDict = myFile.getContentByLength(WORD_LENGTH)
+    # myDict.reduceList()
 
-def test_dict_length_not_integer():
-    with pytest.raises(ValueError):
-        myFile = File('es.txt')
-        Dictionary(myFile, 3.14)
-
-def test_reduce_list_no_args():
+def test_reduceList_letterStatus_wrong_type():
     pass
 
-def test_reduce_list_no_match():
+def test_reduceList_letter_char_wrong_type():
     pass
 
-def test_reduce_list_no_position():
+def test_reduceList_letter_position_type():
     pass
 
-def test_reduce_list_match_bad_type():
-    pass
-
-def test_reduce_list_position_not_int():
+def test_reduceList_rigth_behavior():
     pass

@@ -26,7 +26,7 @@ def getValues()->list[int]:
             continue
         return list(map(int,values))
 
-def getMatches() -> list[Match]:
+def getUserMatches() -> list[Match]:
     letters = getLetters()
     statues = getValues()
 

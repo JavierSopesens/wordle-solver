@@ -1,7 +1,7 @@
-from config import *
+from config import DICTIONARY_FILE, WORD_LENGTH, MAX_ATTEMPTS
 from classes import File, Dictionary, Suggester
-from helper.userInputs import getMatches
-from helper.duplicateHandler import handleRepeated
+from helper import userInterface
+from helper import duplicateHandler
 
 def main() -> None:
     fileDict = File(DICTIONARY_FILE)
@@ -12,13 +12,13 @@ def main() -> None:
     while len(myDict.words) != 1 and attempts != MAX_ATTEMPTS:
         print(f'remaining possible words: {len(myDict.words)}')
 
-        matches = getMatches()
-        matches = handleRepeated(matches)
+        userMatches = userInterface.getUserMatches()
+        cleanMatches = duplicateHandler.handleRepeated(userMatches)
 
-        for index, match in enumerate(matches):
+        for index, match in enumerate(cleanMatches):
             myDict.reduceList(letter_status=match.status, letter_char=match.letter, position=index)
 
-        suggester = Suggester(myDict)
+        suggester = Suggester(myDict.words)
         print(f"suggested word to use: {suggester.recommendBestOption()}")
 
         attempts += 1
