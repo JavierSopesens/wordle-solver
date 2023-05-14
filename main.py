@@ -1,24 +1,24 @@
-from config import DICTIONARY_FILE, WORD_LENGTH, MAX_ATTEMPTS
-from classes import File, Dictionary, Suggester
+from config import GLOSSARY_FILE, WORD_LENGTH, MAX_ATTEMPTS
+from classes import File, Glossary, Suggester
 from helper import userInterface
 from helper import duplicateHandler
 
 def main() -> None:
-    fileDict = File(DICTIONARY_FILE)
+    fileDict = File(GLOSSARY_FILE)
     words = fileDict.getContentByLength(WORD_LENGTH)
-    myDict = Dictionary(words)
+    myGlossary = Glossary(words)
     attempts = 0
 
-    while len(myDict.words) != 1 and attempts != MAX_ATTEMPTS:
-        print(f'remaining possible words: {len(myDict.words)}')
+    while len(myGlossary.words) != 1 and attempts != MAX_ATTEMPTS:
+        print(f'remaining possible words: {len(myGlossary.words)}')
 
         userMatches = userInterface.getMatches()
         cleanMatches = duplicateHandler.handleRepeated(userMatches)
 
         for index, match in enumerate(cleanMatches):
-            myDict.reduceList(letter_status=match.status, letter_char=match.letter, position=index)
+            myGlossary.reduceList(letter_status=match.status, letter_char=match.letter, position=index)
 
-        suggester = Suggester(myDict.words)
+        suggester = Suggester(myGlossary.words)
         print(f"suggested word to use: {suggester.recommendBestOption()}")
 
         attempts += 1

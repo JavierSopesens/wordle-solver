@@ -1,6 +1,6 @@
 from config import MatchStatus as status
 
-class Dictionary:
+class Glossary:
     def __init__(self, words: list[str]) -> None:
         if not words:
             raise TypeError("words parameter were empty")

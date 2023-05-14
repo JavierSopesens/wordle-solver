@@ -12,7 +12,7 @@ MAX_ATTEMPTS = 5
 #   spanish -> es
 #   if you have another dictionary, you can use that one inserting the file in the "glossary" folder
 LANGUAGE = 'es'
-DICTIONARY_FILE = LANGUAGE + '.txt'
+GLOSSARY_FILE = LANGUAGE + '.txt'
 
 # possible status of values associated to the chosen letters in every word
 class MatchStatus(Enum):
