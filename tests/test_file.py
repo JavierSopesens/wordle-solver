@@ -1,16 +1,10 @@
 import pytest
 from classes import File
-from config import *
 
 def test_no_args():
     with pytest.raises(TypeError):
         File()
 
-def test_name_is_int():
-    with pytest.raises(TypeError):
-        File(1)
-
-def test_getContent_file_not_exists():
-    with pytest.raises(FileNotFoundError):
-        myFile = File('and.txt')
-        myFile.getContentByLength(WORD_LENGTH)
+def test_invalid_name():
+    with pytest.raises(ValueError):
+        File('invalid_path/invalid_file.txt')
