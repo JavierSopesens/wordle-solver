@@ -12,7 +12,7 @@ def main() -> None:
     while len(myDict.words) != 1 and attempts != MAX_ATTEMPTS:
         print(f'remaining possible words: {len(myDict.words)}')
 
-        userMatches = userInterface.getUserMatches()
+        userMatches = userInterface.getMatches()
         cleanMatches = duplicateHandler.handleRepeated(userMatches)
 
         for index, match in enumerate(cleanMatches):
