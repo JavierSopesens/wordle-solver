@@ -1,4 +1,5 @@
 from config import MatchStatus as status
+from classes.Word import Word
 
 class Glossary:
     def __init__(self, words: list[str]) -> None:
@@ -6,19 +7,18 @@ class Glossary:
             raise TypeError("words parameter were empty")
         self.words = words
 
-    def reduceList(self, letter_status: int, letter_char: str, position: int) -> None:
-        if letter_status == status.NOT_IN_WORD.value:
-            self.deleteWordsWithLetter(letter_char)
-        if letter_status == status.IN_WORD_BUT_BAD_PLACE.value:
-            self.deleteWordsWithLetterInPosition(letter_char, position)
-        if letter_status == status.IN_WORD_AND_IN_PLACE.value:
-            self.deleteWordsWithoutLetterInPosition(letter_char, position)
+    def reduceList(self, letter_status: int, letter_char: str, position:int):
+        trimmedList = []
+        for word in self.words:
+            myWord = Word(word)
+            if letter_status is status.NOT_IN_WORD.value:
+                if not myWord.containsLetter(letter_char):
+                    trimmedList.append(word)
+            if letter_status is status.IN_WORD_BUT_BAD_PLACE.value:
+                if myWord.containsLetter(letter_char) and not myWord.hasLetterInPlace(letter_char, position):
+                    trimmedList.append(word)
+            if letter_status is status.IN_WORD_AND_IN_PLACE.value:
+                if myWord.containsLetter(letter_char) and myWord.hasLetterInPlace(letter_char, position):
+                    trimmedList.append(word)
 
-    def deleteWordsWithLetter(self, letter: str) -> None:
-        self.words = [word for word in self.words if letter not in word]
-
-    def deleteWordsWithLetterInPosition(self, letter: str, position: int) -> None:
-        self.words = [word for word in self.words if letter in word and word[position] is not letter]
-
-    def deleteWordsWithoutLetterInPosition(self, letter: str, position: int) -> None:
-        self.words = [word for word in self.words if letter in word[position]]
+        self.words = trimmedList
