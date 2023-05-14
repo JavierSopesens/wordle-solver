@@ -16,6 +16,7 @@ classes
 	Glossary ---------> contains the words and the functions to reduce the list until find the hidden word
 	Match ------------> dataclass with letter and value as parameter
 	Suggester --------> used to suggest the better next word to use
+	Word -------------> used to check if words contain certain letters, position of that letter and if has repeated letters
 
 glossary -------------> contains documents to play in differents LANGUAGES
 	es ---------------> glossary in spanish
