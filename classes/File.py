@@ -1,4 +1,5 @@
 from os import path
+
 class File:
     def __init__(self, file_path: str) -> None:
         if not path.isfile(file_path):

@@ -578,6 +578,7 @@ alligators
 alliteration
 allotted
 allow
+alloy
 allowable
 allowance
 allowed
