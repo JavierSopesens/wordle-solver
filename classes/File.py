@@ -1,11 +1,11 @@
-from config import WORD_LENGTH
-
+from os import path
 class File:
-    def __init__(self, name: str) -> None:
-        self.name = name
-        self.path = 'glossary/'+self.name
+    def __init__(self, file_path: str) -> None:
+        if not path.isfile(file_path):
+            raise ValueError('file does not exists')
+        self.path = file_path
 
-    def getContentByLength(self, word_length:int = WORD_LENGTH) ->list[str]:
+    def getContentByLength(self, word_length:int) ->list[str]:
         try:
             if type(word_length)!=int:
                 raise ValueError(f'{word_length} have to be an integer')

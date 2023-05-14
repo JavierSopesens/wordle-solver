@@ -11,10 +11,11 @@ MAX_ATTEMPTS = 5
 #   english -> eng
 #   spanish -> es
 #   if you have another dictionary, you can use that one inserting the file in the "glossary" folder
-LANGUAGE = 'es'
-GLOSSARY_FILE = LANGUAGE + '.txt'
+GLOSSARY_FILE = 'eng.txt'
+PATH = 'glossary/'
+FILE_PATH = PATH + GLOSSARY_FILE
 
-# possible status of values associated to the chosen letters in every word
+# possible values associated to the chosen letters in every word
 class MatchStatus(Enum):
     TO_AVOID = -1 # only used in control of duplicated matches. final user do not uses it.
     NOT_IN_WORD = 0

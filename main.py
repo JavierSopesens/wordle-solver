@@ -1,11 +1,11 @@
-from config import GLOSSARY_FILE, WORD_LENGTH, MAX_ATTEMPTS
+from config import FILE_PATH, WORD_LENGTH, MAX_ATTEMPTS
 from classes import File, Glossary, Suggester
 from helper import userInterface
 from helper import duplicateHandler
 
 def main() -> None:
-    fileDict = File(GLOSSARY_FILE)
-    words = fileDict.getContentByLength(WORD_LENGTH)
+    fileGlossary = File(FILE_PATH)
+    words = fileGlossary.getContentByLength(WORD_LENGTH)
     myGlossary = Glossary(words)
     attempts = 0
 
