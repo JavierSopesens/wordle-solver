@@ -1,0 +1,6 @@
+__pycache__
+.vscode
+.pytest_cache
+tests/__pycache__
+main/__pycache__
+todo.txt
