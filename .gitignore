@@ -4,3 +4,4 @@ __pycache__
 tests/__pycache__
 main/__pycache__
 todo.txt
+.coverage
